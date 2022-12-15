@@ -2,12 +2,14 @@ from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from router.urls import router
+from threading import Thread
 from manager.manager import initializeAvailableWorkstations, periodicDataFetch
 
 app = FastAPI()
 
 initializeAvailableWorkstations()
-periodicDataFetch()
+t = Thread(target=periodicDataFetch,daemon=True)
+t.start()
 app.include_router(router)
 
 app.mount("/static", StaticFiles(directory="templates/static"), name="static")
