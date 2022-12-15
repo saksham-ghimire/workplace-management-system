@@ -15,10 +15,7 @@ def create_notification_channel(q:Queue):
     print("successfully created a communication channel")
     while True:
         msg = q.get()
-        print("got message",msg)
-        req = structure_pb2.StreamRequest(MessageType=msg)
-        yield req
-        time.sleep(1)
+        yield msg
 
 
 
@@ -30,6 +27,7 @@ class WorkStation:
     assignedTo: str
     addedOn: str
     monitoringProcesses : list[str]
+    blockingProcesses: list[str]
     active: bool = False
 
     availableWorkstations:ClassVar[dict[str,WorkStation]] = {}
