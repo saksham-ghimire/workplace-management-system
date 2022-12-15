@@ -1,0 +1,17 @@
+grpcurl -cacert=./server.crt -d '{"RequestType":"system"}' grpc-0:7007 grpcRouter.Router.FetchMetaData
+grpcurl -cacert=./server.crt -d '{"RequestType":"software"}' grpc-0:7007 grpcRouter.Router.FetchMetaData
+grpcurl -cacert=./server.crt -d '{"RequestType":"services"}' grpc-0:7007 grpcRouter.Router.FetchMetaData
+grpcurl  -d '{"RequestType":"runningProcesses"}' grpc-0:7007 grpcRouter.Router.FetchMetaData
+grpcurl -cacert=./server.crt -d '{"RequestType":"processesInfo"}' grpc-0:7007 grpcRouter.Router.FetchMetaData
+grpcurl -plaintext -H 'authorization-token:saksham' -d '{"RequestType":"network"}' 192.168.101.4:7007 grpcRouter.Router.FetchMetaData
+
+grpcurl -insecure -H 'authorization-token:saksham' -d '{"RequestType":"addFirewallRule",                                                                 "FRule":
+{"Name":"test-case-0",
+"Dir":"in",
+"Protocol":"TCP",
+"LocalPort":"80,8080",
+"Action":"allow"}
+}' 192.168.101.7:7007 grpcRouter.Router.PerformMetaAction
+
+protoc --go_out=. --go-grpc_out=. ./structure.proto
+python3 -m grpc_tools.protoc --proto_path=. ./structure.proto --python_out=. --grpc_python_out=.

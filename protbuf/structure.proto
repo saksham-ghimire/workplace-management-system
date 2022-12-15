@@ -1,0 +1,128 @@
+syntax = "proto3";
+package grpcRouter;
+option go_package = "./grpcRouter";
+
+service Router{
+   rpc FetchMetaData(MetaDataRequest) returns (MetaDataResponse) {}
+   rpc PerformMetaAction(MetaActionRequest) returns (MetaActionResponse) {}
+   rpc CommunicationChannel(stream StreamRequest) returns (EmptyResponse) {}
+}
+// --------- Type definations ---------
+message Software{
+    string Name= 1;
+    string Version  =2;
+    string InstallData = 3;
+    string Size = 4;
+    string Publisher=5;
+    string InstallLocation=6;
+}
+message FirewallRule{
+    string Name =1;
+    string Protocol=2;
+    string Dir=3;
+    string LocalPort=4;
+    string Action =5;
+    string RemotePort =6;
+    string Profile=7;
+    string LocalIP=8;
+    string Program=9;
+    string RemoteIP=10;
+    string Enable=11;
+    string Service=12;
+    string InterfaceType=13;
+    
+}
+message Process {
+    string Name=1;
+    bool IsRunning=2;
+    float MemoryPercent=3;
+    float CpuPercent=4;
+    int32 ActiveThreads=5;
+    int32 ProcessInstance=6;  
+}
+
+
+message Cpu {
+    string VendorId =1 ;
+    string Cores =2;
+    string Model =3;
+}
+
+message Disk {
+    string Name = 1;
+    string Total =2;
+    string Used =3;
+}
+
+message NetInformation{
+    int32 InputBytes =1 ;
+    int32 OutputBytes=2;
+    int32 InputPkt =3;
+    int32 OutputPkt =4;
+
+}
+message Service {
+    string Name =1 ;
+    string Status =2 ;
+    bool AcceptStop =3;
+}
+
+message SystemHealth{
+    int32 Temperature = 1;
+    int32 CpuPercent =2;
+    string InUseRam =3;
+    int32 CpuOpSystem =4;
+    int32 CpuOpIO=5;
+    int32 CpuOpIdle = 6;
+    int32 CpuOpUser = 7;
+}
+
+message SystemInformation{
+    string OS = 1;
+    string Platform =2;
+    string PlatformVersion=3;
+    string Hostname=4;
+    string KernelVersion=5;
+    string KernelArch=6;
+    string TotalRAM = 7;
+    repeated Disk Disks=8;
+    repeated Cpu Cpus = 9;
+}
+// ------------------------
+// -------- ReqRes definations --------
+message MetaDataResponse{
+    int32 StatusCode = 1;
+    SystemInformation Sysinfo = 2;
+    repeated Service Services = 3;
+    repeated Software InstalledSoftwares = 4;
+    NetInformation NetInfo =5;
+    SystemHealth SysHealth = 6;
+    repeated string RunningProcesses  = 7;
+    repeated Process ProcessesInfo =8;
+    string ErrorMessage = 9;
+}
+
+message MetaDataRequest{
+    string RequestType = 1;
+    repeated string RequestValue =2;
+}
+
+message MetaActionRequest{
+    string RequestType=1;
+    FirewallRule FRule =2;
+}
+
+message MetaActionResponse{
+    int32 StatusCode = 1;
+    string ErrorMessage = 2;
+}
+
+
+message StreamRequest{
+    string MessageType=1;
+    string Message=2;
+}
+
+
+message EmptyResponse{}
+//  ------------------------
