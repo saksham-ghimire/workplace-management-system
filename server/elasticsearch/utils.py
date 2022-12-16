@@ -24,8 +24,9 @@ def post_request_serializer(hostname:str,data:Any) -> dict:
 class RegisteredIndexes(Enum):
     Workstations = "workstations"
     NetworkInfo = "networkinfo"
-    RuntimeProcesses = "pruntime"
-    ProcessesInformation = "pinfo"
+    RuntimeProcesses = "runtimeprocesses"
+    MonitoringProcesses = "monitoringprocesses"
+    SystemHealth = "systemhealth"
 
 
 class SupportedQueries(Enum):
@@ -37,6 +38,8 @@ class SupportedQueries(Enum):
     GetRegisteredWorkstations = 'https://127.0.0.1:9200/workstations/_search', queries.query_intire_index
     GetNetworkLog = 'https://127.0.0.1:9200/networkinfo/_search', queries.host_time_based_query
     GetRuntimeProcessLog = 'https://127.0.0.1:9200/pruntime/_search', queries.query_runtime_process
+    GetMonitoringProcessLog = 'https://127.0.0.1:9200/mprocesses/_search', queries.query_monitoring_process
+
     PostWorkstationInfo = 'https://127.0.0.1:9200/workstations/_doc', post_request_serializer
     PostNetworkInfo = 'https://127.0.0.1:9200/networkinfo/_doc', post_request_serializer
     PostRunningProcesses = 'https://127.0.0.1:9200/pruntime/_doc', post_request_serializer

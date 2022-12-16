@@ -2,7 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-from . import structure_pb2
+from .  import structure_pb2
 
 
 class RouterStub(object):
