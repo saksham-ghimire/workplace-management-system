@@ -89,13 +89,16 @@ Index
 	<hr>
 	<div class="row">
 		<div class="col-6">
-			sadasdasd
+			Maximum Used Applications
 			<div>
-				<canvas id="myChart"></canvas>
+				
+				<canvas id="maxappuse"></canvas>
 			  </div>
 		</div>
 		<div class="col-6">
-			world
+			<div>
+				<canvas id="myChart2"></canvas>
+			  </div>
 		</div>
 	</div>
 	<div class="row">
@@ -127,30 +130,42 @@ Index
 </div>
 {% endblock %}
 {% block script %}
+<script src="{{ url_for('static', path='js/charts.js') }}"></script>
 <script>
-	// fetch("http://localhost:8000/profile/saksham").then(response => {console.log(response.text())}).catch(error=>{console.log(error)})
-	a = [{"name":"saksham","value":2},{"name":"saksham","value":2}]
-	temp = []
-	for (let i=0; i < a.length; i++){
-	}
-	const config = {
-		type: 'bar',
-data: {
-  datasets: [{
-	label : 'work',
-	backgroundColor: '#2598d2	',
-		borderColor: '#2598d2',
-		
-    data: [{x:'Sales', y:20}, {x:'Revenue', y:10}]
-  }]
-}
-	};
-  </script>	
-<script>
-	const myChart = new Chart(
-	  document.getElementById('myChart'),
-	  config
+max_used_applications() 
+const labels = ['Red', 'Orange', 'Yellow', 'Green', 'Blue'];
+const data = {
+  labels: labels,
+  datasets: [
+    {
+      label: 'Dataset 1',
+      data: [10,20,30,4,2],
+      
+    }
+  ]
+};
+const config2 = {
+  type: 'polarArea',
+  data: data,
+  options: {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top',
+      },
+      title: {
+        display: true,
+        text: 'Chart.js Polar Area Chart'
+      }
+    }
+  },
+};
+const myChart2 = new Chart(
+	  document.getElementById('myChart2'),
+	  config2
 	);
+
+
 	const items = [
 	{
       "ip": "127.0.0.1",

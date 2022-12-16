@@ -78,6 +78,9 @@ class Elasticsearch:
     def getRuntimeProcessLog(self,from_time:int,to_time:int,hostname:str=None):
         return self.__get(query=QuerySerializer.getDesignatedQuery(reqType=SupportedQueries.GetRuntimeProcessLog,params={"from_time":from_time,"to_time":to_time,"hostname":hostname}))
 
+    def getMonitoringProcessLog(self,from_time:int,to_time:int,hostname:str=None,process:str=None):
+        return self.__get(query=QuerySerializer.getDesignatedQuery(reqType=SupportedQueries.GetMonitoringProcessLog,params={"from_time":from_time,"to_time":to_time,"hostname":hostname,"process":process}))
+
 
     def pushNetworkLog(self, hostname:str, data:structure_pb2.NetInformation):
         return self.__post(query=QuerySerializer.getDesignatedQuery(reqType=SupportedQueries.PostNetworkInfo,params={"data":data,"hostname":hostname}))

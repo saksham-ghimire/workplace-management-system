@@ -7,6 +7,7 @@ import time
 import grpcRouter.structure_pb2_grpc as structure_pb2_grpc
 import grpcRouter.structure_pb2 as structure_pb2
 from queue import Queue
+from logger import logger as log
 
 from threading import Thread
 
@@ -62,6 +63,7 @@ class WorkStation:
             if response.StatusCode == 200:
                 return response
             else:
+                log.warn(f"on attempt to perform meta action got response : {response}")
                 return None
         except (grpc.RpcError,grpc.FutureTimeoutError) as e:
             print("Failed to connect to client please check network connectivity",e)
@@ -84,7 +86,8 @@ class WorkStation:
 
     def getProcessesInfo(self) -> list[structure_pb2.Process]:
         response = self.__getMetaData(request=structure_pb2.MetaDataRequest(RequestType="processesInfo", RequestValue=self.monitoringProcesses))
-        return response.ProcessesInfo
+        if response != None: return response.ProcessesInfo
+        return None
 
     def getServicesInfo(self) -> list[structure_pb2.Service]:
         response = self.__getMetaData(request=structure_pb2.MetaDataRequest(RequestType="services"))
@@ -101,6 +104,15 @@ class WorkStation:
         if response != None: return response.RunningProcesses
         return None
 
+    def stopRunningService(self, service:str) -> bool:
+        response = self.__performMetaAction(structure_pb2.MetaActionRequest(RequestType="stopService",ServiceName=service))
+        if response != None: return True
+        return False
+    
+    def startService(self, service:str) -> bool:
+        response = self.__performMetaAction(structure_pb2.MetaActionRequest(RequestType="startService",ServiceName=service))
+        if response != None: return True
+        return False
     
 
     def serializeCommunicationChannel(self):

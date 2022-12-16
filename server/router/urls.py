@@ -73,3 +73,23 @@ async def getProcessRuntime(hostname:str = None, from_time:int = int(time.time()
     response = elasticInstance.getRuntimeProcessLog(hostname=hostname,from_time=from_time,to_time=to_time)
     if response != None : return response
     return JSONResponse(status_code=404, content={"message":"the requested resource doesn't exist"})
+
+@router.get("/monitoringprocesses")
+async def getMonitoringProcessLog(hostname:str = None, process:str=None,from_time:int = int(time.time())-86400, to_time:int=int(time.time())):
+    elasticInstance = Elasticsearch.getInstance()
+    response = elasticInstance.getMonitoringProcessLog(hostname=hostname,from_time=from_time,to_time=to_time,process=process)
+    if response != None : return response
+    return JSONResponse(status_code=404, content={"message":"the requested resource doesn't exist"})
+
+
+@router.post("/stopservice/{hostname}")
+async def stopService(hostname:str,service:str):
+     host = WorkStation.availableWorkstations.get(hostname)
+     
+     return JSONResponse(content={"action":host.stopRunningService(service=service)})
+
+@router.post("/startservice/{hostname}")
+async def startService(hostname:str,service:str):
+     host = WorkStation.availableWorkstations.get(hostname)
+     
+     return JSONResponse(content={"action":host.startService(service=service)})
