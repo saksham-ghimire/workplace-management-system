@@ -64,7 +64,8 @@ message NetInformation{
 message Service {
     string Name =1 ;
     string Status =2 ;
-    bool AcceptStop =3;
+    string SCName = 3;
+    bool AcceptStop =4;
 }
 
 message SystemHealth{
@@ -110,6 +111,7 @@ message MetaDataRequest{
 message MetaActionRequest{
     string RequestType=1;
     FirewallRule FRule =2;
+    string ServiceName=3;
 }
 
 message MetaActionResponse{

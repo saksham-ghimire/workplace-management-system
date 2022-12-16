@@ -4,6 +4,7 @@ import (
 	"client/grpcRouter"
 	"client/handler"
 	"context"
+	"fmt"
 )
 
 func (s *RouterServer) PerformMetaAction(ctx context.Context, req *grpcRouter.MetaActionRequest) (*grpcRouter.MetaActionResponse, error) {
@@ -35,6 +36,32 @@ func (s *RouterServer) PerformMetaAction(ctx context.Context, req *grpcRouter.Me
 
 	case "removeFirewallRule":
 		if err := handler.FirewallRuleDelete(req.GetFRule()); err != nil {
+			return &grpcRouter.MetaActionResponse{
+				StatusCode:   500,
+				ErrorMessage: err.Error(),
+			}, nil
+		}
+
+		return &grpcRouter.MetaActionResponse{
+			StatusCode: 200,
+		}, nil
+
+	case "stopService":
+		fmt.Println("called")
+		if err := handler.StopRunningService(req.GetServiceName()); err != nil {
+			return &grpcRouter.MetaActionResponse{
+				StatusCode:   500,
+				ErrorMessage: err.Error(),
+			}, nil
+		}
+
+		return &grpcRouter.MetaActionResponse{
+			StatusCode: 200,
+		}, nil
+
+	case "startService":
+		fmt.Println("called")
+		if err := handler.StartService(req.GetServiceName()); err != nil {
 			return &grpcRouter.MetaActionResponse{
 				StatusCode:   500,
 				ErrorMessage: err.Error(),

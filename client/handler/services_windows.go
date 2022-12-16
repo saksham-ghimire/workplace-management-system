@@ -19,8 +19,17 @@ func FetchAvailableServices() ([]*grpcRouter.Service, error) {
 			Name:       service.DisplayName,
 			Status:     service.StatusText,
 			AcceptStop: service.AcceptStop,
+			SCName:     service.SCName,
 		})
 
 	}
 	return availableServices, nil
+}
+
+func StopRunningService(serviceName string) error {
+	return helper.StopService(serviceName)
+}
+
+func StartService(serviceName string) error {
+	return helper.StartService(serviceName)
 }
