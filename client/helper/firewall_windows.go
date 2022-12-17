@@ -18,11 +18,12 @@ func AddFirewallRule(arguments map[string]string) error {
 	if FirewallRuleExists(arguments["Name"]) {
 		return errors.New("pre-existing rule")
 	}
-
+	fmt.Println("netsh", append(addRule, appendArgs(arguments)...))
 	cmd := exec.Command("netsh", append(addRule, appendArgs(arguments)...)...)
 	cmdOutput := &bytes.Buffer{}
 	cmd.Stdout = cmdOutput
 	if err := cmd.Run(); err != nil {
+		fmt.Println(err, cmdOutput)
 		return err
 	}
 	fmt.Println("output is", cmdOutput)

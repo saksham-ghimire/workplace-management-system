@@ -1,0 +1,299 @@
+{% extends "base_generic.html" %}
+{% block title %} 
+Index
+
+ 
+{% endblock %}
+{% block content %}
+<style>
+    .form-control{
+        border: 0.5px solid rgb(177, 175, 175);
+      
+    }
+    .header{
+      font-size: large;
+    }
+    .rule-row{
+      padding: 10px;
+    }
+</style>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-4 col-sm-12">
+           <div class="row"><img src="{{ url_for('static', path='images/create_icon.png') }}"></div> 
+           <br>
+
+           <h5>Create a New Firewall Rule</h5>
+           Create a new firewall rule to assure the traffic is in compliance of your domain
+        </div>
+        <div class="col-lg-8 col-sm-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="#">Home</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Library</li>
+                </ol>
+              </nav>       
+              <div class="alert alert-warning" role="alert">
+                <h4 class="alert-heading">Caution!</h4>
+                <p>This feature is only intended to be used by adminstrative authority with proper firewall configuration knowledge. If unsure of what you are doing we recommend not using this feature. <a href="#">  Go back</a></p>
+            
+              </div> 
+        
+        </div>
+    </div>
+    <hr>
+    <form onsubmit="crandom(); return false; ">
+    <div class="row rule-row" >
+     <div class="col-lg-6 col-sm-12 col-offset-2">
+      <div class="form-group header">Name</div>
+      <small class="form-text text-muted ">Name identifies each and every firewall rule and is expected to be unique</small>
+     </div>
+     <div class="col-lg-6 col-sm-12">
+      <div class="form-group">
+        <input type="text" class="form-control" id="ruleName">
+      </div>
+     </div>
+    </div>
+
+    <div class="row rule-row" >
+      <div class="col-lg-6 col-sm-12 ">
+       <div class="form-group header">LocalPort</div>
+       <small class="form-text text-muted ">
+        <p>Local ports to which an rule is applicable for. <br>If left empty the rule will be applicable for all local ports. </p> 
+        
+        <p>Multiple ports can be configured with comma.         
+        <br> Eg : 80,8080 </p>
+        
+       </small>
+      </div>
+      <div class="col-lg-6 col-sm-12">
+       <div class="form-group">
+         <input type="text" class="form-control"  id="ruleLocalPort" >
+       </div>
+      </div>
+     </div>
+
+     <div class="row rule-row" >
+      <div class="col-lg-6 col-sm-12">
+       <div class="form-group header">RemotePort</div>
+       <small class="form-text text-muted ">
+        <p>Remote ports to which an rule is applicable for. <br>If left empty the rule will be applicable for all local ports. </p> 
+        
+        <p>Multiple ports can be configured with comma.         
+        <br> Eg : 80,8080 </p>
+        
+       </small>
+      </div>
+      <div class="col-lg-6 col-sm-12">
+       <div class="form-group">
+         <input type="text" class="form-control"  id="ruleRemotePort">
+       </div>
+      </div>
+     </div>
+
+     <div class="row rule-row" >
+      <div class="col-lg-6 col-sm-12">
+       <div class="form-group header">Local Ip Addresses</div>
+       <small class="form-text text-muted ">
+        <p>Local Ips to which an rule is applicable for. <br>If left empty the rule will be applicable for all local IP addresses. </p> 
+        
+        <p>Multiple ips can be configured with comma. (Also supports subnet)        
+        <br> Eg : 192.168.101.9, 192.168.100.0/24 </p>
+        
+       </small>
+      </div>
+      <div class="col-lg-6 col-sm-12">
+       <div class="form-group">
+         <input type="text" class="form-control" id="ruleLocalIp" >
+       </div>
+      </div>
+     </div>
+
+     <div class="row rule-row" >
+      <div class="col-lg-6 col-sm-12">
+       <div class="form-group header">Remote Ip Addresses</div>
+       <small class="form-text text-muted ">
+        <p>Remote Ips to which an rule is applicable for. <br>If left empty the rule will be applicable for all remote IP addresses. </p> 
+        
+        <p>Multiple ips can be configured with comma. (Also supports subnet)        
+          <br> Eg : 10.10.10.10, 10.10.10.0/24 </p>
+        
+       </small>
+      </div>
+      <div class="col-lg-6 col-sm-12">
+       <div class="form-group">
+         <input type="text" class="form-control" id="ruleRemoteIp">
+       </div>
+      </div>
+     </div>
+
+     <div class="row rule-row" >
+      <div class="col-lg-6 col-sm-12">
+       <div class="form-group header">Direction <i class="bi bi-compass"></i>   </div>
+       <small class="form-text text-muted ">
+        <p>In direction is applicable to any traffic coming to PC. <br>Out direction is applicable to any traffic going from PC. </p> 
+       </small>
+      </div>
+      <div class="col-lg-6 col-sm-12">
+       <div class="form-group">
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="cbox-direction" value="in" checked>
+          <label class="form-check-label" for="cbox-direction">
+            In
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="cbox-direction" value="out">
+          <label class="form-check-label" for="cbox-direction">
+            Out
+          </label>
+        </div>
+       </div>
+      </div>
+     </div>
+
+     <div class="row rule-row" >
+      <div class="col-lg-6 col-sm-12">
+       <div class="form-group header">Action <i class="bi bi-shield-lock"></i></div>
+       <small class="form-text text-muted ">Determines what action should be taken on traffic matching all conditions.</small>
+      </div>
+      <div class="col-lg-6 col-sm-12">
+       <div class="form-group">
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="cbox-action"  value="allow" checked>
+          <label class="form-check-label" for="exampleRadios1">
+            Allow
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="cbox-action" value="block">
+          <label class="form-check-label" for="exampleRadios2">
+            Block
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="cbox-action" value="bypass">
+          <label class="form-check-label" for="exampleRadios2">
+            Bypass
+          </label>
+        </div>
+       </div>
+      </div>
+     </div>
+
+     <div class="row rule-row" >
+      <div class="col-lg-6 col-sm-12">
+       <div class="form-group header">Program</div>
+       <small class="form-text text-muted ">Path of progam to which rule is applicable for. <br> Eg : "C:\Program Files\Git\git-bash.exe"</small>
+      </div>
+      <div class="col-lg-6 col-sm-12">
+       <div class="form-group">
+         <input type="text" class="form-control" id="ruleProgram">
+       </div>
+      </div>
+     </div>
+
+     <div class="row rule-row" >
+      <div class="col-lg-6 col-sm-12">
+       <div class="form-group header">Services</div>
+       <small class="form-text text-muted ">Name of service to which rule is applicable for. <br> Eg : sshd </small>
+      </div>
+      <div class="col-lg-6 col-sm-12">
+       <div class="form-group">
+         <input type="text" class="form-control" id="ruleServices">
+       </div>
+      </div>
+     </div>
+
+     <div class="row rule-row" >
+      <div class="col-lg-6 col-sm-12">
+       <div class="form-group header">Protocol <i class="bi bi-file-earmark-lock2"></i></div>
+       <small class="form-text text-muted ">We'll never share your email with anyone else.</small>
+      </div>
+      <div class="col-lg-6 col-sm-12">
+        <select class="form-control form-control-lg" id="ruleProtocol">
+          <option>TCP</option>
+          <option>UDP</option>
+          <option>any</option>
+        </select>
+      </div>
+     </div>
+
+     <div class="row rule-row" >
+      <div class="col-lg-6 col-sm-12">
+       <div class="form-group header">Profile <i class="bi bi-person-check"></i></div>
+       <small class="form-text text-muted ">We'll never share your email with anyone else.</small>
+      </div>
+      <div class="col-lg-6 col-sm-12">
+        <select class="form-control form-control-lg" id="ruleProfile">
+          <option>any</option>
+          <option>public</option>
+          <option>private</option>
+          <option>domain</option>
+        </select>
+      </div>
+     </div>
+    
+     <div class="row rule-row" >
+      <div class="col-lg-6 col-sm-12">
+       <div class="form-group header">Interface <i class="bi bi-globe"></i></div>
+       <small class="form-text text-muted ">We'll never share your email with anyone else.</small>
+      </div>
+      <div class="col-lg-6 col-sm-12">
+        <select class="form-control form-control-lg" id="ruleInterface">
+          <option>any</option>
+          <option>wireless</option>
+          <option>ras</option>
+          <option>lan</option>
+        </select>
+      </div>
+     </div>
+     <div class="row rule-row"> 
+
+       <button type="submit" class="btn btn-info ml-auto">Submit</button>
+     </div>
+  </form>
+
+</div>
+<script>
+  function crandom(){
+    
+
+    let name = document.getElementById("ruleName").value;
+    let localPort = document.getElementById("ruleLocalPort").value;
+    let remotePort = document.getElementById("ruleRemotePort").value;
+    let remoteIP = document.getElementById("ruleRemoteIp").value;
+    let localIP = document.getElementById("ruleLocalIp").value;
+    let direction = document.querySelector('input[name="cbox-direction"]:checked').value;
+    let action = document.querySelector('input[name="cbox-action"]:checked').value;
+    let interface = document.getElementById("ruleInterface").value;
+    let profile = document.getElementById("ruleProfile").value;
+    let protocol = document.getElementById("ruleProtocol").value;
+    let service = document.getElementById("ruleServices").value;
+    let program = document.getElementById("ruleProgram").value;
+
+
+    body = JSON.stringify({
+        
+            Name: name,
+            Protocol: protocol,
+            Dir: direction,
+            LocalPort: localPort,
+            Action: action,
+            RemotePort: remotePort,
+            Profile: profile,
+            LocalIP: localIP,
+            Program: program,
+            RemoteIP: remoteIP,
+            // Enable: e,
+            Service: service,
+            InterfaceType: interface
+          
+    })
+
+    console.log(body)
+
+
+  }
+</script>
+{% endblock %}

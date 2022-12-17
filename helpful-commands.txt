@@ -15,3 +15,47 @@ grpcurl -insecure -H 'authorization-token:saksham' -d '{"RequestType":"addFirewa
 
 protoc --go_out=. --go-grpc_out=. ./structure.proto
 python3 -m grpc_tools.protoc --proto_path=. ./structure.proto --python_out=. --grpc_python_out=.
+
+
+Netsh commands 
+ add rule name=<string>
+      dir=in|out
+      action=allow|block|bypass
+      [program=<program path>]
+      [service=<service short name>|any]
+      [description=<string>]
+      [enable=yes|no (default=yes)]
+      [profile=public|private|domain|any[,...]]
+      [localip=any|<IPv4 address>|<IPv6 address>|<subnet>|<range>|<list>]
+      [remoteip=any|localsubnet|dns|dhcp|wins|defaultgateway|
+         <IPv4 address>|<IPv6 address>|<subnet>|<range>|<list>]
+      [localport=0-65535|<port range>[,...]|RPC|RPC-EPMap|IPHTTPS|any (default=any)]
+      [remoteport=0-65535|<port range>[,...]|any (default=any)]
+      [protocol=0-255|icmpv4|icmpv6|icmpv4:type,code|icmpv6:type,code|
+         tcp|udp|any (default=any)]
+      [interfacetype=wireless|lan|ras|any]
+      [rmtcomputergrp=<SDDL string>]
+      [rmtusrgrp=<SDDL string>]
+      [edge=yes|deferapp|deferuser|no (default=no)]
+      [security=authenticate|authenc|authdynenc|authnoencap|notrequired
+         (default=notrequired)]
+
+
+        {
+  "Name": "fromAPI",
+  "Protocol": "tcp",
+  "Dir": "in",
+  "LocalPort": "8085",
+  "Action": "block",
+  "RemotePort": "string",
+  "Profile": "string",
+  "LocalIP": "string",
+  "Program": "string",
+  "RemoteIP": "string",
+  "Enable": "string",
+  "Service": "string",
+  "InterfaceType": "string"
+}
+
+
+netsh advfirewall firewall add rule name="check001" direction="in" localport="8080" protocol="tcp" action="block"
