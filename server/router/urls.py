@@ -1,9 +1,10 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Body
 from elasticsearch.elasticsearch import Elasticsearch
 from manager.workstation import WorkStation
 from typing import List
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
+from .utils import FirewallRule
 import time
 from google.protobuf.json_format import MessageToDict
 
@@ -83,13 +84,29 @@ async def getMonitoringProcessLog(hostname:str = None, process:str=None,from_tim
 
 
 @router.post("/stopservice/{hostname}")
-async def stopService(hostname:str,service:str):
+async def stopService(hostname:str, service:str = Body(embed=True)):
      host = WorkStation.availableWorkstations.get(hostname)
      
      return JSONResponse(content={"action":host.stopRunningService(service=service)})
 
 @router.post("/startservice/{hostname}")
-async def startService(hostname:str,service:str):
+async def startService(hostname:str, service:str = Body(embed=True)):
      host = WorkStation.availableWorkstations.get(hostname)
      
      return JSONResponse(content={"action":host.startService(service=service)})
+    
+@router.post("/addfirewallrule/{hostname}")
+async def addFirewallRule(hostname:str, rule : FirewallRule=Body()):
+    host = WorkStation.availableWorkstations.get(hostname)
+    return JSONResponse(content={"action":host.addFirewallRule(firewallRule=rule.serialize_to_protobuf())})
+
+@router.post("/updatefirewallrule/{hostname}")
+async def updateFirewallRule(hostname:str, rule : FirewallRule=Body()):
+    host = WorkStation.availableWorkstations.get(hostname)
+    return JSONResponse(content={"action":host.updateFirewallRule(firewallRule=rule.serialize_to_protobuf())})
+
+@router.post("/removefirewallrule/{hostname}")
+async def removeFirewallRule(hostname:str, rule : FirewallRule=Body()):
+    host = WorkStation.availableWorkstations.get(hostname)
+    return JSONResponse(content={"action":host.deleteFirewallRule(firewallRule=rule.serialize_to_protobuf())})
+    

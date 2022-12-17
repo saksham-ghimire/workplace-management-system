@@ -10,7 +10,7 @@ import (
 func (s *RouterServer) PerformMetaAction(ctx context.Context, req *grpcRouter.MetaActionRequest) (*grpcRouter.MetaActionResponse, error) {
 	switch req.GetRequestType() {
 	case "addFirewallRule":
-
+		fmt.Println("attempt to add rule")
 		if err := handler.FirewallRuleAdd(req.GetFRule()); err != nil {
 			return &grpcRouter.MetaActionResponse{
 				StatusCode:   500,
@@ -47,7 +47,6 @@ func (s *RouterServer) PerformMetaAction(ctx context.Context, req *grpcRouter.Me
 		}, nil
 
 	case "stopService":
-		fmt.Println("called")
 		if err := handler.StopRunningService(req.GetServiceName()); err != nil {
 			return &grpcRouter.MetaActionResponse{
 				StatusCode:   500,
@@ -60,7 +59,6 @@ func (s *RouterServer) PerformMetaAction(ctx context.Context, req *grpcRouter.Me
 		}, nil
 
 	case "startService":
-		fmt.Println("called")
 		if err := handler.StartService(req.GetServiceName()); err != nil {
 			return &grpcRouter.MetaActionResponse{
 				StatusCode:   500,

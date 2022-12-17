@@ -114,6 +114,20 @@ class WorkStation:
         if response != None: return True
         return False
     
+    def addFirewallRule(self, firewallRule : structure_pb2.FirewallRule) -> bool:
+        response = self.__performMetaAction(structure_pb2.MetaActionRequest(RequestType="addFirewallRule",FRule=firewallRule))
+        if response != None: return True
+        return False
+
+    def deleteFirewallRule(self, firewallRule : structure_pb2.FirewallRule) -> bool:
+        response = self.__performMetaAction(structure_pb2.MetaActionRequest(RequestType="removeFirewallRule",FRule=firewallRule))
+        if response != None: return True
+        return False
+    
+    def updateFirewallRule(self, firewallRule : structure_pb2.FirewallRule) -> bool:
+        response = self.__performMetaAction(structure_pb2.MetaActionRequest(RequestType="updateFirewallRule",FRule=firewallRule))
+        if response != None: return True
+        return False
 
     def serializeCommunicationChannel(self):
         while True:

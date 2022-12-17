@@ -23,4 +23,8 @@ async def root(request:Request):
 async def getProfilePage(request:Request):
     return templates.TemplateResponse("profile_view.html",{"request":request})
 
+@app.get("/firewallrule")
+async def getfRulePage(request:Request):
+    return templates.TemplateResponse("firewall_rule.html",{"request":request})
+
 
