@@ -1,0 +1,17 @@
+/* only applicable for profile_view.html page */
+.dataTables_length {
+    display: none;
+}
+
+.dataTables_info {
+    display: none;
+}
+
+.d-card {
+    transition: .4s ease;
+}
+
+.d-card:hover {
+    background-color: rgb(209, 209, 209);
+    transform: scale(0.9);
+}

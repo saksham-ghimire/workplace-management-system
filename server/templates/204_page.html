@@ -1,0 +1,112 @@
+{% extends "base_generic.html" %}
+{% block title %}
+Content Not Found
+{% endblock %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', path='css/204_page.css') }}">
+{% endblock %}
+{% block content %}
+
+<div class="container-fluid">
+    <div id="notfound">
+        <div class="notfound">
+            <div class="notfound-404">
+                <div></div>
+                <h1>204</h1>
+            </div>
+            <h4>Content Unavailable</h4>
+            <p>The content you are looking for is unavailable. It's a mystery how you got here. </p>
+            <a href="/"> Home </a>
+
+        </div>
+    </div>
+
+    {% endblock %}
+    <table id="systemTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Specifications</th>
+            </tr>
+            <tr>
+                <td>OS</td>
+                <td>windows</td>
+            </tr>
+            <tr>
+                <td>Platform</td>
+                <td>Microsoft Windows 11 Home Single Language</td>
+            </tr>
+            <tr>
+                <td>PlatformVersion</td>
+                <td>Standalone Workstation</td>
+            </tr>
+            <tr>
+                <td>Hostname</td>
+                <td>DESKTOP-60TUVO8</td>
+            </tr>
+            <tr>
+                <td>KernelVersion</td>
+                <td>10.0.22621 Build 22621</td>
+            </tr>
+            <tr>
+                <td>KernelArch</td>
+                <td>x86_64</td>
+            </tr>
+            <tr>
+                <td>TotalRAM</td>
+                <td>15.41 GB</td>
+            </tr>
+            <tr>
+                <td><b>Disks</b></td>
+            </tr>
+            <tr>
+                <td>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td> </td>
+                            </tr>
+                            <tr>
+                                <td>Name</td>
+                                <td>C:</td>
+                            </tr>
+                            <tr>
+                                <td>Total</td>
+                                <td>953.08 GB</td>
+                            </tr>
+                            <tr>
+                                <td>Used</td>
+                                <td>132.59 GB</td>
+                            </tr>
+                            <tr>
+                                <td><b>Cpus</b></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td> </td>
+                                            </tr>
+                                            <tr>
+                                                <td>VendorId</td>
+                                                <td>AuthenticAMD</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Cores</td>
+                                                <td>16</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Model</td>
+                                                <td>AMD Ryzen 9 5900HS with Radeon Graphics </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </thead>
+    </table>
