@@ -1,109 +1,29 @@
 {% extends "base_generic.html" %}
-{% block title %} 
+{% block title %}
 Index
-
- 
 {% endblock %}
 {% block content %}
 <h2 class="mb-4">Dashboard</h2>
 <div class="container-fluid" style="border:1px; color:black">
-	<div class="row">
-		<div class="col-xl-3 col-md-6 mb-4">
-			<div class="card border-left-primary shadow h-100 py-2">
-				<div class="card-body">
-					<div class="row no-gutters align-items-center">
-						<div class="col mr-2">
-							<div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-								Users</div>
-							<div class="h5 mb-0">$40,000</div>
-						</div>
-						<div class="col-auto">
-							<i class="bi bi-people fa-2x text-muted"></i>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<div class="col-xl-3 col-md-6 mb-4">
-			<div class="card border-left-success shadow h-100 py-2">
-				<div class="card-body">
-					<div class="row no-gutters align-items-center">
-						<div class="col mr-2">
-							<div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-								Applications</div>
-							<div class="h5 mb-0">$215,000</div>
-						</div>
-						<div class="col-auto">
-							<i class="bi bi-app-indicator fa-2x text-muted"></i>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<div class="col-xl-3 col-md-6 mb-4">
-			<div class="card border-left-info shadow h-100 py-2">
-				<div class="card-body">
-					<div class="row no-gutters align-items-center">
-						<div class="col mr-2">
-							<div class="text-xs font-weight-bold text-info text-uppercase mb-1">Monitoring
-							</div>
-							<div class="row no-gutters align-items-center">
-								<div class="col-auto">
-									<div class="h5 mb-0 mr-3">50%</div>
-								</div>
-								<div class="col">
-									<div class="progress progress-sm mr-2">
-										<div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-auto">
-							<i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<!-- Pending Requests Card Example -->
-		<div class="col-xl-3 col-md-6 mb-4">
-			<div class="card border-left-warning shadow h-100 py-2">
-				<div class="card-body">
-					<div class="row no-gutters align-items-center">
-						<div class="col mr-2">
-							<div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-								Firewall </div>
-							<div class="h5 mb-0">18</div>
-						</div>
-						<div class="col-auto">
-							<i class="bi bi-shield-exclamation fa-2x"></i>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+	{% include 'dashboard_cards.html' %}
 	<hr>
 	<div class="row">
 		<div class="col-6">
 			Maximum Used Applications
 			<div>
-				
+
 				<canvas id="maxappuse"></canvas>
-			  </div>
+			</div>
 		</div>
 		<div class="col-6">
 			<div>
 				<canvas id="myChart2"></canvas>
-			  </div>
+			</div>
 		</div>
 	</div>
 	<div class="row">
 		<div class="table-responsive">
-							
+
 			<table id="table_id" class="table">
 				<thead>
 					<tr>
@@ -115,103 +35,32 @@ Index
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td>Row 1 Data 1</td>
-						<td>Row 1 Data 2</td>
-						<td>Green</td>
-						<td>
-							<a href="mailto:gsakshyam3@gmail.com">gsakshyam3@gmail.com</a>
-						</td>
-					</tr>
-					</tbody>
-					</table>
-					</div>
+
+				</tbody>
+			</table>
+		</div>
 	</div>
 </div>
 {% endblock %}
 {% block script %}
-<script src="{{ url_for('static', path='js/charts.js') }}"></script>
+<script src="{{ url_for('static', path='js/visualization.js') }}"></script>
 <script>
-max_used_applications() 
-const labels = ['Red', 'Orange', 'Yellow', 'Green', 'Blue'];
-const data = {
-  labels: labels,
-  datasets: [
-    {
-      label: 'Dataset 1',
-      data: [10,20,30,4,2],
-      
-    }
-  ]
-};
-const config2 = {
-  type: 'polarArea',
-  data: data,
-  options: {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: 'top',
-      },
-      title: {
-        display: true,
-        text: 'Chart.js Polar Area Chart'
-      }
-    }
-  },
-};
-const myChart2 = new Chart(
-	  document.getElementById('myChart2'),
-	  config2
-	);
+	$(document).ready(function () {
+		// plot the graph 
+		plot_max_used_application_chart();
 
+		table = $('#table_id').DataTable();
 
-	const items = [
-	{
-      "ip": "127.0.0.1",
-      "asignee": "saksham",
-      "active": false,
-	  "gmail":"gsa@gmail.com"
-    },
-	{
-      "ip": "127.0.0.1",
-      "asignee": "saksham",
-      "active": false,
-	  "gmail":"gsa@gmail.com"
-    }
-	]
-
-	$(document).ready( function () {
-    table = $('#table_id').DataTable();
-	
-	fetch('http://localhost:8000/users').then((response) => response.json()).then((data) => 
-	{	
-		table.clear()
-		console.log(data)
-		if (data.message == "success"){
-			let items = data.result
-			items.forEach(element => {
-			table.row.add([element.asignee,element.ip,element.active,element.mail])
+		fetch('http://localhost:8000/workstations').then((response) => response.json()).then((data) => {
+			table.clear()
+			data.forEach(element => {
+				table.row.add([element.hostname, element.ip, element.mail, element.assignedTo])
 			});
+			table.draw()
 		}
-		table.draw()
-	}	
-	);
-
-
+		);
 	});
 
+</script>
 
-
-	// let counts=setInterval(updated);
-    //     let upto=0;
-    //     function updated(){
-    //         var count= document.getElementById("user-counter");
-    //         count.innerHTML=++upto;
-    //         if(upto===30)
-    //         {
-    //             clearInterval(counts);
-    //         }
-    //     }
-  </script>
 {% endblock %}
