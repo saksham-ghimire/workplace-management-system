@@ -168,5 +168,14 @@ class WorkStation:
     def getAvailableWorkstations(cls) -> list[WorkStation]:
         return WorkStation.availableWorkstations
 
+    @classmethod
+    def getTotalNumberOfMonitoringProcesses(cls) -> list[WorkStation]:
+        workstations = WorkStation.availableWorkstations
+        unique = []
+        for workstation in workstations.values():
+            unique.append(
+                i for i in workstation.monitoringProcesses if i not in unique)
+        return len(unique)
+
     def sendNotification(self, message: str):
         self.notificationQueue.put(message)

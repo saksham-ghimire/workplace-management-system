@@ -7,20 +7,43 @@ Index
 <div class="container-fluid" style="border:1px; color:black">
 	{% include 'dashboard_cards.html' %}
 	<hr>
-	<div class="row">
-		<div class="col-6">
+	<div class="row  justify-content-around">
+		<div class="col-7 card">
 			Maximum Used Applications
 			<div>
 
 				<canvas id="maxappuse"></canvas>
 			</div>
 		</div>
-		<div class="col-6">
+		<div class="col-4 card ">
 			<div>
 				<canvas id="myChart2"></canvas>
 			</div>
 		</div>
 	</div>
+	<br>
+	<br>
+
+	<div class="row">
+		<div class="col-6">
+			<div class="alert alert-warning alert-dismissible fade show" role="alert">
+				Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fugit in placeat impedit, pariatur nulla
+				veritatis
+				ipsum nemo laboriosam quod laborum quis voluptate asperiores libero ad officia tempora distinctio itaque
+				odio!
+				Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum commodi eaque excepturi nostrum
+				illum omnis,
+				cum voluptate, porro asperiores dolor neque reprehenderit odit ad sapiente inventore ea ab. Voluptatem,
+				dolore!
+
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+		</div>
+	</div>
+
+
 	<div class="row">
 		<div class="table-responsive">
 
@@ -48,15 +71,16 @@ Index
 	$(document).ready(function () {
 		// plot the graph 
 		plot_max_used_application_chart();
+		plot_user_activity_chart();
 
 		table = $('#table_id').DataTable();
 
 		fetch('http://localhost:8000/workstations').then((response) => response.json()).then((data) => {
-			table.clear()
+			table.clear();
 			data.forEach(element => {
 				table.row.add([element.hostname, element.ip, element.mail, element.assignedTo])
 			});
-			table.draw()
+			table.draw();
 		}
 		);
 	});

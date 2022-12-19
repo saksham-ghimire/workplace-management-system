@@ -36,3 +36,38 @@ async function plot_max_used_application_chart(from = Math.floor(Date.now() / 10
 };
 
 
+async function plot_user_activity_chart(from = Math.floor(Date.now() / 1000) - 604800, to = Math.floor(Date.now() / 1000)) {
+    console.log("defined")
+    const labels = ['Red', 'Orange', 'Yellow', 'Green', 'Blue'];
+    const data = {
+        labels: labels,
+        datasets: [
+            {
+                label: 'Dataset 1',
+                data: [10, 20, 30, 4, 2],
+
+            }
+        ]
+    };
+    const config2 = {
+        type: 'polarArea',
+        data: data,
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Chart.js Polar Area Chart'
+                }
+            }
+        },
+    };
+    new Chart(
+        document.getElementById('myChart2'),
+        config2
+    );
+
+}
