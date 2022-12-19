@@ -19,8 +19,8 @@ templates = Jinja2Templates(directory="templates")
 
 @app.get("/")
 async def root(request: Request):
-    cards_data = {"key_1": "Users", "value_1": 7, "key_2": "Applications", "value_2": 7,
-                  "key_3": "Monitoring", "value_3": 7, "key_4": "Firewall", "value_4": 7}
+    cards_data = {"key_1": "Users", "value_1": len(WorkStation.availableWorkstations), "key_2": "Applications", "value_2": 7,
+                  "key_3": "Monitoring", "value_3": WorkStation.getTotalNumberOfMonitoringProcesses(), "key_4": "Firewall", "value_4": 7}
     return templates.TemplateResponse("index.html", {"request": request, **cards_data})
 
 
@@ -42,4 +42,4 @@ async def getfRulePage(request: Request, hostname: str):
     host = workstations.get(hostname)
     if host == None:
         return templates.TemplateResponse("204_page.html", {"request": request})
-    return templates.TemplateResponse("firewall_rule.html", {"request": request})
+    return templates.TemplateResponse("firewall_rule.html", {"request": request, "hostname": hostname})
