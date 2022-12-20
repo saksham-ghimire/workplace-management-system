@@ -12,39 +12,59 @@ Index
 			Maximum Used Applications
 			<div>
 
-				<canvas id="maxappuse"></canvas>
+				<canvas id="appUsageChart"></canvas>
 			</div>
 		</div>
 		<div class="col-4 card ">
 			<div>
-				<canvas id="myChart2"></canvas>
+				<canvas id="userActivityChart"></canvas>
 			</div>
 		</div>
 	</div>
 	<br>
 	<br>
 
-	<div class="row">
-		<div class="col-6">
-			<div class="alert alert-warning alert-dismissible fade show" role="alert">
-				Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fugit in placeat impedit, pariatur nulla
-				veritatis
-				ipsum nemo laboriosam quod laborum quis voluptate asperiores libero ad officia tempora distinctio itaque
-				odio!
-				Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum commodi eaque excepturi nostrum
-				illum omnis,
-				cum voluptate, porro asperiores dolor neque reprehenderit odit ad sapiente inventore ea ab. Voluptatem,
-				dolore!
+	<div class="row justify-content-around">
+		<div class="col-4 card">
+			<div>
+				<canvas id="netwrokActivityChart"></canvas>
+			</div>
+		</div>
+		<div class="col-7 ">
+			<div class="card">
+				<h2 style="align-self: center;" class="m-3"> Explanatory Manual </h2>
 
-				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
+				<p>
+					Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fugit in placeat impedit, pariatur nulla
+					veritatis
+					ipsum nemo laboriosam quod laborum quis voluptate asperiores libero ad officia tempora distinctio
+					itaque
+					odio!
+					Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fugit in placeat impedit, pariatur nulla
+					veritatis
+					ipsum nemo laboriosam quod laborum quis voluptate asperiores libero ad officia tempora distinctio
+					itaque
+					odio!
+					Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fugit in placeat impedit, pariatur nulla
+					veritatis
+					ipsum nemo laboriosam quod laborum quis voluptate asperiores libero ad officia tempora distinctio
+					itaque
+					odio!
+					Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fugit in placeat impedit, pariatur nulla
+					veritatis
+					ipsum nemo laboriosam quod laborum quis voluptate asperiores libero ad officia tempora distinctio
+					itaque
+					odio!\
+				</p>
+
+
+
 			</div>
 		</div>
 	</div>
 
 
-	<div class="row">
+	<div class="row mt-5">
 		<div class="table-responsive">
 
 			<table id="table_id" class="table">
@@ -72,6 +92,7 @@ Index
 		// plot the graph 
 		plot_max_used_application_chart();
 		plot_user_activity_chart();
+		plot_network_activity();
 
 		table = $('#table_id').DataTable();
 

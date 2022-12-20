@@ -10,176 +10,300 @@ Profile
 		-webkit-columns: 3;
 		-moz-columns: 3;
 	}
+
+	/* body {
+		scroll-behavior: smooth;
+	} */
 </style>
 {% endblock %}
 {% block content %}
 {% include 'dashboard_cards.html' %}
-<div class="row">
+<div class="container-fluid">
+	<div class="row">
 
-	<div class="col-lg-6">
-		<h1>General Information</h1>
-		<p>
-			User : {{data.assignedTo}}
-		</p>
-		<p>
-			IP : {{data.ip}}
-		</p>
-		<p>
-			Active Status : {{data.active}}
-		</p>
-		<p>
-			Email : {{data.mail}}
-		</p>
-		<p>
-			Created On : {{data.addedOn}}
-		</p>
-		<p>
-			Monitoring Processes :
-		<ul class="col-view" id="monitoringProcessList">
-			{% for process in data.monitoringProcesses %}
-			<li>{{process}}</li>
-			{% endfor %}
-		</ul>
-		</p>
-		<p>
-			Restricted Processes :
-		<ul class="col-view" id="restrictedProcessList">
-			{% for process in data.restricedProcesses %}
-			<li>{{process}}</li>
-			{% endfor %}
-		</ul>
+		<div class="col-lg-5">
 
-		</p>
+			<div class="card mt-4 p-4">
+				<h3> <i class="bi bi-person-circle"></i> User Information </h3>
+
+				<div class="row">
+					<i class="bi bi-person-circle mr-2"></i> </i> Hostname : {{hostname}}
+				</div>
+				<div class="row">
+					<i class="bi bi-router mr-2"></i> Ip Address : {{data.ip}}
+				</div>
+				<div class="row">
+					<i class="bi bi-envelope mr-2"></i> Mail : {{data.mail}}
+				</div>
+				<div class="row">
+					<i class="bi bi-person-check mr-2"></i> Assigned To : {{data.assignedTo}}
+				</div>
+				<div class="row">
+					<i class="bi bi-person-video3 mr-2"></i> Active Status : {{data.active}}
+				</div>
+				<div class="row">
+					<i class="bi bi-tv mr-2"></i> Monitoring Processes : {{data.monitoringProcesses}}
+				</div>
+				<div class="row">
+					<i class="bi bi-tv-fill mr-2"></i> Restricted Processes : {{data.restricedProcesses}}
+				</div>
 
 
-		<div class="card mt-4">
-			<div class="card-header">
-				<h5 class="card-title">App Management</h5>
+				<div class="row">
+					<i class="bi bi-microsoft  mr-2"></i> Operating System : <span id="OS"></span>
+				</div>
+				<div class="row">
+					<i class="bi bi-person-workspace  mr-2"></i> Platform : <span id="Platform"></span>
+				</div>
+				<div class="row">
+					<i class="bi bi-pc-display-horizontal mr-2"></i> Platform Version : <span id="PlatformVersion">
+				</div>
+				<div class="row">
+					<i class="bi bi-memory  mr-2"></i> Total RAM : <span id="TotalRAM"></span>
+				</div>
+				<div class="row">
+					<i class="bi bi-c-circle mr-2"></i> Kernel Version : <span id="KernelVersion"></span>
+				</div>
+				<div class="row">
+					<i class="bi bi-bricks mr-2"></i> Kernel Arch : <span id="KernelArch"></span>
+				</div>
+				<div class="row">
+					<a href="#" data-toggle="collapse" data-target="#cpuAccordion" aria-expanded="false"
+						aria-controls="cpuAccordion">
+						<i class="bi bi-cpu  mr-2"></i> CPU
+					</a>
+				</div>
+				<div id="cpuAccordion" class=" row collapse show">
+					<table id="cpuTable" class="table">
+						<thead>
+							<tr>
+								<th>VendorID</th>
+								<th>Cores</th>
+								<th>Model</th>
+							</tr>
+						</thead>
+
+					</table>
+				</div>
+				<div class="row">
+					<a href="#" data-toggle="collapse" data-target="#disksAccordion" aria-expanded="false"
+						aria-controls="disksAccordion">
+						<i class="bi bi-hdd mr-2"></i> Disks
+					</a>
+				</div>
+				<div id="disksAccordion" class=" row collapse show">
+					<table id="diskTable" class="table">
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>Total</th>
+								<th>In-use</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+
 			</div>
-			<div class="card-body">
 
-				<p class="card-text">
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus recusandae, labore ex temporibus
-					veniam debitis repellat modi expedita inventore! Esse repellat quam culpa labore est nihil placeat
-					odit mollitia id.
-					Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam illo ullam reprehenderit nemo ex,
-					distinctio sapiente aut minima dolore repellat modi nihil quisquam incidunt mollitia non facilis
-					consequuntur, eligendi laboriosam.
 
-				</p>
-				<a href="#" class="btn btn-primary m-1"> <i class="bi bi-plus-circle"></i> Add
-					Application </a>
-				<a href="/firewallrule/{{hostname}}" class="btn btn-primary m-1"> <i class="bi bi-plus-circle"></i> Add
-					Firewall Rule </a>
-			</div>
+
 		</div>
+		<div class="col">
+			<div class="card mt-4">
+				<div class="card-header">
+					<h5 class="card-title">App Management</h5>
+				</div>
+				<div class="card-body">
+
+					<p class="card-text">
+						Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus recusandae, labore ex temporibus
+						veniam debitis repellat modi expedita inventore! Esse repellat quam culpa labore est nihil
+						placeat
+						odit mollitia id.
+						Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam illo ullam reprehenderit nemo
+						ex,
+						distinctio sapiente aut minima dolore repellat modi nihil quisquam incidunt mollitia non facilis
+						consequuntur, eligendi laboriosam.
+						Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam illo ullam reprehenderit nemo
+						ex,
+						distinctio sapiente aut minima dolore repellat modi nihil quisquam incidunt mollitia non facilis
+						consequuntur, eligendi laboriosam.
+						Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam illo ullam reprehenderit nemo
+						ex,
+
+					</p>
+					<a href="#" class="btn btn-primary m-1"> <i class="bi bi-plus-circle"></i> Add
+						Application </a>
+					<a href="/firewallrule/{{hostname}}" class="btn btn-primary m-1"> <i class="bi bi-plus-circle"></i>
+						Add
+						Firewall Rule </a>
+				</div>
+			</div>
+			<div class="card mt-4">
+
+				<div class="card-body">
+
+					<canvas id="system_chart"></canvas>
+
+				</div>
+			</div>
+
+		</div>
+
 
 	</div>
 
-	<div class="col-lg-6 border-left">
 
+	<div class="row mt-4">
+		<div class="col-8">
+			<div class="card">
 
-		<div id="accordion">
-			<div class="row">
-				<div class="col">
-					<button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
-						aria-controls="collapseOne">
-						System
-					</button>
-				</div>
-				<div class="col">
-					<button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo"
-						aria-expanded="false" aria-controls="collapseTwo">
-						Software
-					</button>
-				</div>
-				<div class="col">
-					<button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree"
-						aria-expanded="false" aria-controls="collapseThree">
-						Services
-					</button>
-				</div>
+				<canvas id="system_chart2"></canvas>
+
 			</div>
-			<div id="collapseOne" class=" row collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-				<div class="card-body" id="System_information">
-					<table id="system_table" class="table  table-bordered">
-						<thead>
-							<tr>
-								<th>Name</th>
-								<th>Specifications</th>
-							</tr>
-						</thead>
-					</table>
+		</div>
+		<div class="col-4">
+			<div class="card p-4">
+				<div>
+					<canvas id="randomC3"></canvas>
 				</div>
-			</div>
-			<div id="collapseTwo" class=" row collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-				<div class="table-responsive">
-
-					<table id="software_table" class="table">
-						<thead>
-							<tr>
-								<th>Name</th>
-								<th>Version</th>
-								<th>Installed Location</th>
-							</tr>
-						</thead>
-					</table>
+				<hr>
+				<div class="row">
+					InputBytes :
 				</div>
-			</div>
-			<div class="row collapse p-4" aria-labelledby="headingThree" data-parent="#accordion" id="collapseThree">
-				<div class="table-responsive">
+				<div class="row">
+					OutputBytes:
+				</div>
+				<div class="row">
+					InputPackets:
+				</div>
+				<div class="row">
+					OutputPackets:
+				</div>
 
-					<table id="services_table" class="table">
+
+			</div>
+		</div>
+
+
+	</div>
+
+	<hr>
+	<div class="row mt-4">
+		<h3> State Management</h3>
+		<div class="col-12">
+			<div id="accordion">
+				<div class="row">
+					<div class="col">
+						<button class="btn btn-outline-success" data-toggle="collapse" data-target="#collapseOne"
+							aria-expanded="true" aria-controls="collapseOne">
+							<i class="bi bi-bell-slash"></i> Breach Logs
+						</button>
+					</div>
+					<div class="col">
+						<button class="btn btn-outline-success" data-toggle="collapse" data-target="#collapseTwo"
+							aria-expanded="false" aria-controls="collapseTwo">
+							Software
+						</button>
+					</div>
+					<div class="col">
+						<button class="btn btn-outline-success" data-toggle="collapse" data-target="#collapseThree"
+							aria-expanded="false" aria-controls="collapseThree">
+							<i class="bi bi-server"></i> Services
+						</button>
+					</div>
+
+				</div>
+				<div id="collapseOne" class="row collapse show mt-4" aria-labelledby="headingOne"
+					data-parent="#accordion">
+					<table id="shadow" class="table">
 						<thead>
 							<tr>
 								<th>Column 1</th>
 								<th>Column 2</th>
 								<th>column 3</th>
+								<th>column 4</th>
 							</tr>
 						</thead>
+						<tbody>
+							<td>C:</td>
+							<td>132.7</td>
+
+							<td>953.08</td>
+							<td>953.08</td>
+
+						</tbody>
 					</table>
 				</div>
+				<div id="collapseTwo" class=" row collapse mt-4" aria-labelledby="headingTwo" data-parent="#accordion">
+					<div class="table-responsive">
 
+						<table id="software_table" class="table">
+							<thead>
+								<tr>
+									<th>Name</th>
+									<th>Version</th>
+									<th>Installed Location</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+				<div class="row collapse mt-4" aria-labelledby="headingThree" data-parent="#accordion"
+					id="collapseThree">
+					<div class="table-responsive">
+
+						<table id="services_table" class="table">
+							<thead>
+								<tr>
+									<th>ServiceName</th>
+									<th>Status</th>
+									<th>Action</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+
+				</div>
 			</div>
 
-
 		</div>
+
 	</div>
 
-
-
 </div>
 
-
-
-</div>
 {% endblock %}
 {% block script %}
+<script src="{{ url_for('static', path='js/visualization.js') }}"></script>
+
 <script>
 	// only show first 20 element of monitoring and restricted processes
 	$('#monitoringProcessList li').hide().slice(0, 21).show();
 	$('#restrictedProcessList li').hide().slice(0, 21).show();
-
-
+	plot_system_health_chart();
+	plot_network_activity();
 	$(document).ready(function () {
 		$('#table_id').DataTable();
+
 	});
 
 	// system information table
 	fetch('http://localhost:8000/systeminfo/saksham-PC').then((response) => response.json()).then((data) => {
 
 		Object.entries(data).forEach(([key, value]) => {
-			if (typeof (value) == "object") {
+			if (key == "Cpus") {
 				value.forEach(obj => {
-					$("#system_table tr:last").after(`<tr> <td><b>${key}</b></td> <td><table></table></td></tr> <tr></tr>`)
-					Object.entries(obj).forEach(([key1, value1]) => {
-						$(`#system_table table:last`).after(`<tr><td>${key1}</td> <td>${value1}</td></tr>`)
-					});
-
-				});
-
+					$("#cpuTable tr:last").after(`<tr> <td>${obj.VendorId}</td> <td>${obj.Cores}</td>  <td>${obj.Model}</td> </tr>`)
+				}
+				)
+			} else if (key == "Disks") {
+				value.forEach(obj => {
+					$("#diskTable tr:last").after(`<tr> <td>${obj.Name}</td> <td>${obj.Total}</td>  <td>${obj.Used}</td> </tr>`)
+				}
+				)
 			} else {
-				$("#system_table tr:last").after(`<tr> <td>${key}</td> <td>${value}</td> </tr>`)
+				$(`#${key}`).html(`${value}`)
 			}
 		});
 

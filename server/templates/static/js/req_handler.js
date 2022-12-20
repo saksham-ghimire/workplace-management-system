@@ -4,15 +4,14 @@ async function addFirewallRule() {
     let remotePort = $("#ruleRemotePort").val();
     let remoteIP = $("#ruleRemoteIp").val();
     let localIP = $("#ruleLocalIp").val();
-    let direction = $("#input[name='cbox-direction']:checked").val();
-    let action = $("#input[name='cbox-action']:checked").val();
+    let direction = $("input[name='cbox-direction']:checked").val();
+    let action = $("input[name='cbox-action']:checked").val();
     let interface = $("#ruleInterface").val();
     let profile = $("#ruleProfile").val();
     let protocol = $("#ruleProtocol").val();
     let service = $("#ruleServices").val();
     let program = $("#ruleProgram").val();
-
-
+    console.log(action, direction)
     let reqBody = JSON.stringify({
 
         Name: name,

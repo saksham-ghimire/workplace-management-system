@@ -50,6 +50,7 @@ async def getSystemInfo(hostname: str):
         return JSONResponse(status_code=404, content={"message": "the requested resource doesn't exist"})
     response = host.getSystemInfo()
     if response != None:
+
         return MessageToDict(response)
 
     return JSONResponse(status_code=404, content={"message": "the requested resource doesn't exist"})
@@ -75,14 +76,34 @@ async def getServicesInfo(hostname: str):
     host = WorkStation.availableWorkstations.get(hostname)
     if host == None:
         return JSONResponse(status_code=404, content={"message": "the requested resource doesn't exist"})
-    installedsoftwares = host.getServicesInfo()
-    if installedsoftwares == None:
+    services = host.getServicesInfo()
+    if services == None:
         JSONResponse(status_code=404, content={
                      "message": "the requested resource doesn't exist"})
     response = []
-    for software in installedsoftwares:
-        response.append(MessageToDict(software))
+    for service in services:
+        response.append(MessageToDict(service))
     return response
+
+
+@router.get("/useractivity")
+async def getUserActivity(from_time: int = int(time.time())-86400, to_time: int = int(time.time())):
+    elasticInstance = Elasticsearch.getInstance()
+    response = elasticInstance.getUserActivityLog(
+        from_time=from_time, to_time=to_time)
+    if response != None:
+        return response
+    return JSONResponse(status_code=404, content={"message": "the requested resource doesn't exist"})
+
+
+@router.get("/networkusage")
+async def getNetworkUsage(from_time: int = int(time.time())-86400, to_time: int = int(time.time())):
+    elasticInstance = Elasticsearch.getInstance()
+    response = elasticInstance.getNetworkUsage(
+        from_time=from_time, to_time=to_time)
+    if response != None:
+        return response
+    return JSONResponse(status_code=404, content={"message": "the requested resource doesn't exist"})
 
 
 @router.get("/processruntime")
