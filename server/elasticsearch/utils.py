@@ -39,11 +39,11 @@ class SupportedQueries(Enum):
 
     GetWorkstationInfo = 'https://127.0.0.1:9200/workstations/_search', queries.host_based_query
     GetRegisteredWorkstations = 'https://127.0.0.1:9200/workstations/_search', queries.query_intire_index
-    GetNetworkLog = 'https://127.0.0.1:9200/networkinfo/_search', queries.host_time_based_query
-    GetNetworkUsage = 'https://127.0.0.1:9200/networkinfo/_search', queries.query_user_activity
+    GetNetworkUsage = 'https://127.0.0.1:9200/networkinfo/_search', queries.query_network_usage
     GetRuntimeProcessLog = 'https://127.0.0.1:9200/pruntime/_search', queries.query_runtime_process
-    GetUserActivityLog = 'https://127.0.0.1:9200/pruntime/_search', queries.query_user_activity
+    GetSystemHealthLog = 'https://127.0.0.1:9200/systeminfo/_search', queries.query_system_health
     GetMonitoringProcessLog = 'https://127.0.0.1:9200/mprocesses/_search', queries.query_monitoring_process
+    GetHostLogCount = 'https://127.0.0.1:9200/pruntime/_search', queries.query_host_based_count
 
     PostWorkstationInfo = 'https://127.0.0.1:9200/workstations/_doc', post_request_serializer
     PostNetworkInfo = 'https://127.0.0.1:9200/networkinfo/_doc', post_request_serializer

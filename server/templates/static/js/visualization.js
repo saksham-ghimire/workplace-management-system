@@ -36,7 +36,7 @@ async function plot_max_used_application_chart(from = Math.floor(Date.now() / 10
 };
 
 async function plot_network_activity(from = Math.floor(Date.now() / 1000) - 604800, to = Math.floor(Date.now() / 1000)) {
-    let data = await fetch(`http://localhost:8000/networkusage?from_time=${from}&to_time=${to}`)
+    let data = await fetch(`http://localhost:8000/network?from_time=${from}&to_time=${to}`)
         .then((response) => response.json())
         .then(data => {
             return data;
@@ -54,7 +54,6 @@ async function plot_network_activity(from = Math.floor(Date.now() / 1000) - 6048
 
     }
 
-    console.log(labels, plotData)
 
     const config3 = {
         type: 'doughnut',
@@ -146,50 +145,3 @@ async function plot_user_activity_chart(from = Math.floor(Date.now() / 1000) - 6
 
 }
 
-
-
-async function plot_system_health_chart(from = Math.floor(Date.now() / 1000) - 604800, to = Math.floor(Date.now() / 1000)) {
-
-    const data = {
-        labels: ["temperature", "cpu", "cpu2", "cpu1", "temperature", "cpu", "cpu2", "cpu1", "temperature", "cpu", "cpu2", "cpu1", "temperature", "cpu", "cpu2", "cpu1", "temperature", "cpu", "cpu2", "cpu1", "temperature", "cpu", "cpu2", "cpu1", "temperature", "cpu", "cpu2", "cpu1", "temperature", "cpu", "cpu2", "cpu1", "temperature", "cpu", "cpu2", "cpu1", "temperature", "cpu", "cpu2", "cpu1", "temperature", "cpu", "cpu2", "cpu1", "temperature", "cpu", "cpu2", "cpu1"],
-        datasets: [
-            {
-                label: 'Dataset 1',
-                data: [10, 20, 30, 81, 10, 20, 30, 81, 10, 20, 30, 81, 10, 20, 30, 81, 10, 20, 30, 81, 10, 20, 30, 81, 10, 20, 30, 81, 10, 20, 30, 81, 10, 20, 30, 81, 10, 20, 30, 81, 10, 20, 30, 81, 10, 20, 30, 81]
-
-            },
-            {
-                label: 'Dataset 2',
-                data: [40, 30, 12, 11, 40, 30, 12, 11, 40, 30, 12, 11, 40, 30, 12, 11, 40, 30, 12, 11, 40, 30, 12, 11, 40, 30, 12, 11, 40, 30, 12, 11, 40, 30, 12, 11, 40, 30, 12, 11, 40, 30, 12, 11, 40, 30, 12, 11]
-            }
-        ]
-    };
-
-    const config4 = {
-        type: 'line',
-        data: data,
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    position: 'top',
-                },
-                title: {
-                    display: true,
-                    text: 'Chart.js Line Chart'
-                }
-            }
-        },
-    };
-    new Chart(
-        document.getElementById('system_chart2'),
-        config4
-    );
-    new Chart(
-        document.getElementById('system_chart'),
-        config4
-    );
-
-
-
-}

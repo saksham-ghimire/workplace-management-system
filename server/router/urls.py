@@ -36,7 +36,7 @@ async def getWorkstationProfile(hostname):
 @router.get("/network")
 async def getNetworkInfo(hostname: str = None, from_time: int = int(time.time())-86400, to_time: int = int(time.time())):
     elasticInstance = Elasticsearch.getInstance()
-    response = elasticInstance.getNetworkLog(
+    response = elasticInstance.getNetworkUsage(
         hostname=hostname, from_time=from_time, to_time=to_time)
     if response != None:
         return response
@@ -53,6 +53,16 @@ async def getSystemInfo(hostname: str):
 
         return MessageToDict(response)
 
+    return JSONResponse(status_code=404, content={"message": "the requested resource doesn't exist"})
+
+
+@router.get("/systeminfo/health/{hostname}")
+async def getSystemHealthInfo(hostname: str, from_time: int = int(time.time())-1800, to_time: int = int(time.time())):
+    elasticInstance = Elasticsearch.getInstance()
+    response = elasticInstance.getSystemHealthLog(hostname=hostname,
+                                                  from_time=from_time, to_time=to_time)
+    if response != None:
+        return response
     return JSONResponse(status_code=404, content={"message": "the requested resource doesn't exist"})
 
 
@@ -78,8 +88,8 @@ async def getServicesInfo(hostname: str):
         return JSONResponse(status_code=404, content={"message": "the requested resource doesn't exist"})
     services = host.getServicesInfo()
     if services == None:
-        JSONResponse(status_code=404, content={
-                     "message": "the requested resource doesn't exist"})
+        return JSONResponse(status_code=404, content={
+            "message": "the requested resource doesn't exist"})
     response = []
     for service in services:
         response.append(MessageToDict(service))
@@ -90,16 +100,6 @@ async def getServicesInfo(hostname: str):
 async def getUserActivity(from_time: int = int(time.time())-86400, to_time: int = int(time.time())):
     elasticInstance = Elasticsearch.getInstance()
     response = elasticInstance.getUserActivityLog(
-        from_time=from_time, to_time=to_time)
-    if response != None:
-        return response
-    return JSONResponse(status_code=404, content={"message": "the requested resource doesn't exist"})
-
-
-@router.get("/networkusage")
-async def getNetworkUsage(from_time: int = int(time.time())-86400, to_time: int = int(time.time())):
-    elasticInstance = Elasticsearch.getInstance()
-    response = elasticInstance.getNetworkUsage(
         from_time=from_time, to_time=to_time)
     if response != None:
         return response
@@ -142,7 +142,6 @@ async def startService(hostname: str, service: str = Body(embed=True)):
 
 @router.post("/addfirewallrule/{hostname}")
 async def addFirewallRule(hostname: str, rule: FirewallRule = Body()):
-    print(rule)
     host = WorkStation.availableWorkstations.get(hostname)
     return JSONResponse(content={"action": host.addFirewallRule(firewallRule=rule.serialize_to_protobuf())})
 

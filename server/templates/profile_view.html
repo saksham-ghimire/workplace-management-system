@@ -158,14 +158,14 @@ Profile
 		<div class="col-8">
 			<div class="card">
 
-				<canvas id="system_chart2"></canvas>
+				<canvas id="monitoring_process_chart"></canvas>
 
 			</div>
 		</div>
 		<div class="col-4">
 			<div class="card p-4">
 				<div>
-					<canvas id="randomC3"></canvas>
+					<canvas id="network_chart"></canvas>
 				</div>
 				<hr>
 				<div class="row">
@@ -275,14 +275,15 @@ Profile
 
 {% endblock %}
 {% block script %}
-<script src="{{ url_for('static', path='js/visualization.js') }}"></script>
+<script src="{{ url_for('static', path='js/profile_visualization.js') }}"></script>
 
 <script>
 	// only show first 20 element of monitoring and restricted processes
 	$('#monitoringProcessList li').hide().slice(0, 21).show();
 	$('#restrictedProcessList li').hide().slice(0, 21).show();
-	plot_system_health_chart();
-	plot_network_activity();
+	plot_system_health_chart("{{hostname}}");
+	plot_network_chart("{{hostname}}");
+	plot_monitoring_process_chart("{{hostname}}")
 	$(document).ready(function () {
 		$('#table_id').DataTable();
 
@@ -333,7 +334,7 @@ Profile
 	// services specific table
 	servicesTable = $('#services_table').DataTable();
 
-	fetch('http://localhost:8000/servicesinfo/saksham-PC').then((response) => response.json()).then((data) => {
+	fetch('http://localhost:8000/servicesinfo/{{hostname}}').then((response) => response.json()).then((data) => {
 		data.forEach(obj => {
 			if (obj.Name == undefined) {
 				obj.Name = "--"
