@@ -79,22 +79,13 @@ class Elasticsearch:
             return response
         return None
 
-    def getNetworkLog(self, from_time: int, to_time: int, hostname: str = None):
-        return self.__get(query=QuerySerializer.getDesignatedQuery(reqType=SupportedQueries.GetNetworkLog, params={"from_time": from_time, "to_time": to_time, "hostname": hostname}))
-
-    def getNetworkUsage(self, from_time: int, to_time: int):
+    def getNetworkUsage(self, from_time: int, to_time: int, hostname: str = None):
         response = self.__get(query=QuerySerializer.getDesignatedQuery(reqType=SupportedQueries.GetNetworkUsage, params={
-                              "from_time": from_time, "to_time": to_time}))
-        if response == None:
-            return None
+                              "from_time": from_time, "to_time": to_time, "hostname": hostname}))
+        if hostname != None:
+            print("on network", response)
+            return response
         return response.get("categories_agg").get("buckets")
-        # response = {"InputBytes": abs(float(
-        #     response.get("input_bytes_sum_agg").get("value")))/1000,
-        #     "OutputBytes": float(response.get("output_bytes_sum_agg").get("value"))/1000,
-        #     "InputPackets": float(response.get("input_packets_sum_agg").get("value")),
-        #     "OutputPackets": float(response.get("output_packets_sum_agg").get("value"))
-        # }
-        return response
 
     def getRuntimeProcessLog(self, from_time: int, to_time: int, hostname: str = None):
         response = self.__get(query=QuerySerializer.getDesignatedQuery(reqType=SupportedQueries.GetRuntimeProcessLog, params={
@@ -103,9 +94,23 @@ class Elasticsearch:
             return None
         return response.get("categories_agg").get("buckets")
 
+    def getSystemHealthLog(self, from_time: int, to_time: int, hostname: str = None):
+        response = self.__get(query=QuerySerializer.getDesignatedQuery(
+            reqType=SupportedQueries.GetSystemHealthLog, params={"hostname": hostname, "from_time": from_time, "to_time": to_time}))
+        if response != None:
+            return response
+        return None
+
+    def getMonitoringProcessLog(self, from_time: int, to_time: int, hostname: str = None, process: str = None):
+        response = self.__get(query=QuerySerializer.getDesignatedQuery(
+            reqType=SupportedQueries.GetMonitoringProcessLog, params={"hostname": hostname, "from_time": from_time, "to_time": to_time, "process": process}))
+        if response != None:
+            return response
+        return None
+
     def getUserActivityLog(self, from_time: int, to_time: int):
         response = self.__get(query=QuerySerializer.getDesignatedQuery(
-            reqType=SupportedQueries.GetUserActivityLog, params={"from_time": from_time, "to_time": to_time}))
+            reqType=SupportedQueries.GetHostLogCount, params={"from_time": from_time, "to_time": to_time}))
         if response == None:
             return None
         return response.get("categories_agg").get("buckets")
@@ -131,5 +136,6 @@ class QuerySerializer:
     @staticmethod
     def getDesignatedQuery(reqType: SupportedQueries, params: dict) -> dict:
         url, data = reqType.url, reqType.func(**params)
-        print("here", url, data)
+        print("here sos", url, data)
+
         return {"url": url, "data": json.dumps(data)}

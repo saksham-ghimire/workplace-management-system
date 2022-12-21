@@ -31,7 +31,6 @@ func FetchSystemHealth() (*grpcRouter.SystemHealth, error) {
 	for _, v := range temp {
 		aggTemperature += int(v.Temperature)
 	}
-
 	cpuInfo := &grpcRouter.SystemHealth{
 		CpuPercent:  int32(percent[0]),
 		Temperature: int32(aggTemperature),

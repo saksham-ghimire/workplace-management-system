@@ -49,7 +49,7 @@ def host_time_based_query(from_time: int, to_time: int, hostname: str = None) ->
     return body
 
 
-def count_agg_on_host() -> dict:
+def count_agg_on_host(size: int) -> dict:
 
     return {
         "size": 0,
@@ -58,9 +58,9 @@ def count_agg_on_host() -> dict:
                 "terms": {
                     "field": "hostname.keyword",
                     "order": {
-                        "_count": "asc",
+                        "_count": "desc",
                     },
-                    "size": 5
+                    "size": size
 
                 },
             }
@@ -68,7 +68,7 @@ def count_agg_on_host() -> dict:
     }
 
 
-def count_agg_on_process() -> dict:
+def count_agg_on_process(size: int) -> dict:
 
     return {
         "size": 0,
@@ -77,9 +77,9 @@ def count_agg_on_process() -> dict:
                 "terms": {
                     "field": "processName.keyword",
                     "order": {
-                        "_count": "asc",
+                        "_count": "desc",
                     },
-                    "size": 10
+                    "size": size
 
                 },
             }
@@ -100,14 +100,18 @@ def sum_agg_on_network() -> dict:
     }
 
 
-def query_user_activity(from_time: int, to_time: int) -> dict:
-    return {**time_based_query(from_time=from_time, to_time=to_time), **count_agg_on_host()}
-
-# hostname is a must here
+def query_system_health(from_time: int, to_time: int, hostname: str) -> dict:
+    return {**host_time_based_query(from_time=from_time, to_time=to_time, hostname=hostname)}
 
 
-def query_network_usage(from_time: int, to_time: int) -> dict:
-    return {**time_based_query(from_time=from_time, to_time=to_time), **sum_agg_on_network()}
+def query_host_based_count(from_time: int, to_time: int) -> dict:
+    return {**time_based_query(from_time=from_time, to_time=to_time), **count_agg_on_host(5)}
+
+
+def query_network_usage(from_time: int, to_time: int, hostname: str) -> dict:
+    if hostname != None:
+        return {**host_time_based_query(from_time=from_time, to_time=to_time, hostname=hostname)}
+    return {**time_based_query(from_time=from_time, to_time=to_time), **count_agg_on_host(5)}
 
 
 def query_runtime_process(from_time: int, to_time: int, hostname: str = None) -> dict:
@@ -117,7 +121,7 @@ def query_runtime_process(from_time: int, to_time: int, hostname: str = None) ->
     else:
         body = time_based_query(from_time=from_time, to_time=to_time)
 
-    return {**body, **count_agg_on_process()}
+    return {**body, **count_agg_on_process(10)}
 
 
 def query_monitoring_process(from_time: int, to_time: int, hostname: str = None, process: str = None) -> dict:
