@@ -173,8 +173,21 @@ class WorkStation:
         workstations = WorkStation.availableWorkstations
         unique = []
         for workstation in workstations.values():
-            unique.append(
-                i for i in workstation.monitoringProcesses if i not in unique)
+            for i in workstation.monitoringProcesses:
+                if i not in unique:
+                    unique.append(i)
+
+            print("sadasdas", unique)
+        return len(unique)
+
+    @classmethod
+    def getTotalNumberOfRestrictedProcesses(cls) -> list[WorkStation]:
+        workstations = WorkStation.availableWorkstations
+        unique = []
+        for workstation in workstations.values():
+            for i in workstation.restricedProcesses:
+                if i not in unique:
+                    unique.append(i)
         return len(unique)
 
     def sendNotification(self, message: str):

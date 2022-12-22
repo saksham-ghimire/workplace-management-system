@@ -70,10 +70,11 @@ Index
 			<table id="table_id" class="table">
 				<thead>
 					<tr>
-						<th>Assignee</th>
+						<th>Hostname</th>
 						<th>IP Address</th>
-						<th>Status</th>
 						<th>Email</th>
+						<th>Assigned To</th>
+						<th>Status</th>
 
 					</tr>
 				</thead>
@@ -99,7 +100,7 @@ Index
 		fetch('http://localhost:8000/workstations').then((response) => response.json()).then((data) => {
 			table.clear();
 			data.forEach(element => {
-				table.row.add([element.hostname, element.ip, element.mail, element.assignedTo])
+				table.row.add([element.hostname, element.ip, element.mail, element.assignedTo, element.active])
 			});
 			table.draw();
 		}

@@ -73,8 +73,8 @@ async def getSoftwareInfo(hostname: str):
         return JSONResponse(status_code=404, content={"message": "the requested resource doesn't exist"})
     installedsoftwares = host.getSoftwareInfo()
     if installedsoftwares == None:
-        JSONResponse(status_code=404, content={
-                     "message": "the requested resource doesn't exist"})
+        return JSONResponse(status_code=404, content={
+            "message": "the requested resource doesn't exist"})
     response = []
     for software in installedsoftwares:
         response.append(MessageToDict(software))
@@ -94,6 +94,16 @@ async def getServicesInfo(hostname: str):
     for service in services:
         response.append(MessageToDict(service))
     return response
+
+
+@router.get("/breachedLog/{hostname}")
+async def stopService(hostname: str, from_time: int = int(time.time())-86400, to_time: int = int(time.time())):
+    elasticInstance = Elasticsearch.getInstance()
+    response = elasticInstance.getBreachedLog(
+        hostname=hostname, from_time=from_time, to_time=to_time)
+    if response != None:
+        return response
+    return JSONResponse(status_code=404, content={"message": "the requested resource doesn't exist"})
 
 
 @router.get("/useractivity")

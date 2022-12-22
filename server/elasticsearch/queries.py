@@ -87,21 +87,25 @@ def count_agg_on_process(size: int) -> dict:
     }
 
 
-def sum_agg_on_network() -> dict:
+def cardinality_on_process() -> dict:
     return {
-        "size": 0,
         "aggs": {
-            "input_bytes_sum_agg":  {"sum": {"field": "InputBytes"}},
-            "output_bytes_sum_agg":  {"sum": {"field": "OutputBytes"}},
-            "input_packets_sum_agg":  {"sum": {"field": "InputPkt"}},
-            "output_packets_sum_agg":  {"sum": {"field": "OutputPkt"}},
-
+            "categories_agg": {
+                "cardinality": {
+                    "field": "processName.keyword"
+                }
+            }
         }
     }
 
 
 def query_system_health(from_time: int, to_time: int, hostname: str) -> dict:
     return {**host_time_based_query(from_time=from_time, to_time=to_time, hostname=hostname)}
+
+
+def query_breach_log(from_time: int, to_time: int, hostname: str, size: int = 50) -> dict:
+    size_query = {"size": size}
+    return {**size_query, **host_time_based_query(from_time=from_time, to_time=to_time, hostname=hostname)}
 
 
 def query_host_based_count(from_time: int, to_time: int) -> dict:

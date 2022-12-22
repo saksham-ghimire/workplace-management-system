@@ -4,6 +4,7 @@ from fastapi.templating import Jinja2Templates
 from router.urls import router
 from manager.workstation import WorkStation
 from threading import Thread
+from elasticsearch.elasticsearch import Elasticsearch
 from manager.manager import initializeAvailableWorkstations, periodicDataFetch
 
 app = FastAPI()
@@ -19,15 +20,17 @@ templates = Jinja2Templates(directory="templates")
 
 @app.get("/")
 async def root(request: Request):
-    cards_data = {"key_1": "Users", "value_1": len(WorkStation.availableWorkstations), "key_2": "Applications", "value_2": 7,
-                  "key_3": "Monitoring", "value_3": WorkStation.getTotalNumberOfMonitoringProcesses(), "key_4": "Firewall", "value_4": 7}
+    elasticInstance = Elasticsearch.getInstance()
+    cards_data = {"key_1": "Users", "value_1": len(WorkStation.availableWorkstations), "key_2": "Applications", "value_2": elasticInstance.getUniqueProcessesCount(),
+                  "key_3": "Monitoring", "value_3": WorkStation.getTotalNumberOfMonitoringProcesses(), "key_4": "Restricted", "value_4": WorkStation.getTotalNumberOfRestrictedProcesses()}
     return templates.TemplateResponse("index.html", {"request": request, **cards_data})
 
 
 @ app.get("/profile/{hostname}")
 async def getProfilePage(request: Request, hostname: str):
-    cards_data = {"key_1": "network", "value_1": 7, "key_2": "Applications", "value_2": 7,
-                  "key_3": "Monitoring", "value_3": 7, "key_4": "breachlogs", "value_4": 7}
+    elasticInstance = Elasticsearch.getInstance()
+    cards_data = {"key_1": "Users", "value_1": len(WorkStation.availableWorkstations), "key_2": "Applications", "value_2": elasticInstance.getUniqueProcessesCount(),
+                  "key_3": "Monitoring", "value_3": WorkStation.getTotalNumberOfMonitoringProcesses(), "key_4": "Restricted", "value_4": WorkStation.getTotalNumberOfRestrictedProcesses()}
     workstations = WorkStation.getAvailableWorkstations()
     host = workstations.get(hostname)
     if host == None:

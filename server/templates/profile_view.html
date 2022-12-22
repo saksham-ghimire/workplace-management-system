@@ -157,7 +157,15 @@ Profile
 	<div class="row mt-4">
 		<div class="col-8">
 			<div class="card">
-
+				<h3>Monitoring Process Chart</h3>
+				Select Process To View :
+				<select class="form-select col-3" aria-label="Default select example" id="mprocesses"
+					onchange="plot_monitoring_process_chart('{{hostname}}')">
+					{% for i in data.monitoringProcesses %}
+					<option selected>{{i}}</option>
+					{% endfor %}
+				</select>
+				<hr>
 				<canvas id="monitoring_process_chart"></canvas>
 
 			</div>
@@ -169,16 +177,16 @@ Profile
 				</div>
 				<hr>
 				<div class="row">
-					InputBytes :
+					InputBytes : <span id="inputbytesCount" class="ml-2"></span>
 				</div>
 				<div class="row">
-					OutputBytes:
+					OutputBytes: <span id="outputbytesCount" class="ml-2"></span>
 				</div>
 				<div class="row">
-					InputPackets:
+					InputPackets: <span id="inputpacketsCount" class="ml-2"></span>
 				</div>
 				<div class="row">
-					OutputPackets:
+					OutputPackets: <span id="outputpacketsCount" class="ml-2"></span>
 				</div>
 
 
@@ -216,24 +224,20 @@ Profile
 				</div>
 				<div id="collapseOne" class="row collapse show mt-4" aria-labelledby="headingOne"
 					data-parent="#accordion">
-					<table id="shadow" class="table">
-						<thead>
-							<tr>
-								<th>Column 1</th>
-								<th>Column 2</th>
-								<th>column 3</th>
-								<th>column 4</th>
-							</tr>
-						</thead>
-						<tbody>
-							<td>C:</td>
-							<td>132.7</td>
+					<div class="table-responsive">
 
-							<td>953.08</td>
-							<td>953.08</td>
+						<table id="breached_log_table" class="table">
+							<thead>
+								<tr>
+									<th>TimeStamp</th>
+									<th>Message</th>>
+								</tr>
+							</thead>
 
-						</tbody>
-					</table>
+						</table>
+					</div>
+
+
 				</div>
 				<div id="collapseTwo" class=" row collapse mt-4" aria-labelledby="headingTwo" data-parent="#accordion">
 					<div class="table-responsive">
@@ -288,6 +292,27 @@ Profile
 		$('#table_id').DataTable();
 
 	});
+
+
+	// brached log
+	from_time = Math.floor(Date.now() / 1000) - 604800
+	to_time = Math.floor(Date.now() / 1000)
+
+	// system information table
+	breachLogTable = $('#breached_log_table').DataTable();
+	fetch(`http://localhost:8000/breachedLog/{{hostname}}/?from_time=${from_time}&to_time=${to_time}`).then((response) => response.json()).then((data) => {
+		console.log(from_time, to_time)
+		breachLogTable.clear();
+		data.forEach(obj => {
+			console.log(obj)
+			breachLogTable.row.add([new Date(obj.timestamp * 1000).toLocaleString("default"), obj.message])
+		});
+
+		breachLogTable.draw();
+
+	});
+
+
 
 	// system information table
 	fetch('http://localhost:8000/systeminfo/saksham-PC').then((response) => response.json()).then((data) => {

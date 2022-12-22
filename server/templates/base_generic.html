@@ -11,6 +11,19 @@
 	</title>
 
 	{% block css %}
+	<style>
+		.wrapper {
+			font-family: 'Hanken Grotesk', sans-serif;
+		}
+
+		.card {
+			font-family: 'Poppins', sans-serif;
+		}
+
+		table {
+			font-family: 'Poppins', sans-serif;
+		}
+	</style>
 	{% endblock %}
 
 	<!-- load all generic css out here -->
@@ -21,7 +34,8 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', path='css/datatable.css') }}">
-
+	<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
 </head>
 
 <body>

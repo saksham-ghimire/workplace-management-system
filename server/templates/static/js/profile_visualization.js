@@ -37,7 +37,7 @@ async function plot_system_health_chart(hostname, from = Math.floor(Date.now() /
                 data: Temperatures
             },
             {
-                label: 'Ram Usage',
+                label: 'RAM Usage',
                 data: RamUsage
             }
         ]
@@ -72,7 +72,9 @@ async function plot_system_health_chart(hostname, from = Math.floor(Date.now() /
 }
 
 async function plot_monitoring_process_chart(hostname, from = Math.floor(Date.now() / 1000) - 1800, to = Math.floor(Date.now() / 1000)) {
-    let dataq = await fetch(`http://localhost:8000/monitoringprocesses?hostname=${hostname}&from_time=${from}&to_time=${to}`)
+    process = ($('#mprocesses').val())
+
+    let dataq = await fetch(`http://localhost:8000/monitoringprocesses?hostname=${hostname}&process=${process}&from_time=${from}&to_time=${to}`)
         .then((response) => response.json())
         .then(data => {
             console.log("erre", data)
@@ -105,7 +107,7 @@ async function plot_monitoring_process_chart(hostname, from = Math.floor(Date.no
 
             },
             {
-                label: 'Ram Usage',
+                label: 'Memory Usage',
                 data: RamUsage
             }
         ]
@@ -132,10 +134,13 @@ async function plot_monitoring_process_chart(hostname, from = Math.floor(Date.no
             }
         },
     };
+    if (Chart.getChart("monitoring_process_chart")) {
+        Chart.getChart("monitoring_process_chart").destroy();
+    }
     new Chart(
         document.getElementById('monitoring_process_chart'),
         config4
-    );
+    )
 
 }
 
@@ -155,7 +160,10 @@ async function plot_network_chart(hostname, from = Math.floor(Date.now() / 1000)
     let labels = ["InputBytes", "OutputBytes", "OutputPkts", "InputPkts"]
     let plotData = [Math.abs(response.InputBytes) / 1000, response.OutputBytes / 1000, response.OutputPkt, response.InputPkt]
 
-
+    $("#inputbytesCount").text(`${Math.abs(response.InputBytes) / 1000} KB`)
+    $("#outputbytesCount").text(`${Math.abs(response.OutputBytes) / 1000} KB`)
+    $("#inputpacketsCount").text(`${response.InputPkt}`)
+    $("#outputpacketsCount").text(`${response.OutputPkt}`)
 
     const config = {
         type: 'doughnut',

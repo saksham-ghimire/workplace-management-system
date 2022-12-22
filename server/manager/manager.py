@@ -47,6 +47,9 @@ def periodicDataFetch():
                         req = structure_pb2.StreamRequest(
                             MessageType="Warning", Message=f'restriced application {i} has been detected running, this incident will be reported')
                         workstation.sendNotification(req)
+                        elasticInstance.pushBreachedLog(
+                            hostname=workstation.hostname,
+                            message=f'restriced application {i} has been detected running')
 
             systemHealth = workstation.getSystemHealth()
             if systemHealth != None:

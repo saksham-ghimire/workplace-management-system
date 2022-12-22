@@ -20,7 +20,6 @@ def post_request_serializer(hostname: str, data: Any) -> dict:
 
     if type(data) != dict:
         data = MessageToDict(data)
-    print(data)
     return data_ingestor(hostname=hostname, data=data)
 
 
@@ -44,9 +43,12 @@ class SupportedQueries(Enum):
     GetSystemHealthLog = 'https://127.0.0.1:9200/systeminfo/_search', queries.query_system_health
     GetMonitoringProcessLog = 'https://127.0.0.1:9200/mprocesses/_search', queries.query_monitoring_process
     GetHostLogCount = 'https://127.0.0.1:9200/pruntime/_search', queries.query_host_based_count
+    GetBreachedLog = 'https://127.0.0.1:9200/breachedlog/_search', queries.query_breach_log
+    GetUniqueProcessesCount = "https://127.0.0.1:9200/pruntime/_search", queries.cardinality_on_process
 
     PostWorkstationInfo = 'https://127.0.0.1:9200/workstations/_doc', post_request_serializer
     PostNetworkInfo = 'https://127.0.0.1:9200/networkinfo/_doc', post_request_serializer
     PostRunningProcesses = 'https://127.0.0.1:9200/pruntime/_doc', post_request_serializer
     PostSystemHealth = 'https://127.0.0.1:9200/systeminfo/_doc', post_request_serializer
     PostMonitoringProcessDetail = 'https://127.0.0.1:9200/mprocesses/_doc', post_request_serializer
+    PostBreachedLog = 'https://127.0.0.1:9200/breachedlog/_doc', post_request_serializer
