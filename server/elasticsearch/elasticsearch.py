@@ -101,6 +101,13 @@ class Elasticsearch:
             return response
         return None
 
+    def getUniqueProcessesCount(self):
+        response = self.__get(query=QuerySerializer.getDesignatedQuery(
+            reqType=SupportedQueries.GetUniqueProcessesCount, params={}))
+        if response != None:
+            return response.get("categories_agg").get("value")
+        return None
+
     def getMonitoringProcessLog(self, from_time: int, to_time: int, hostname: str = None, process: str = None):
         response = self.__get(query=QuerySerializer.getDesignatedQuery(
             reqType=SupportedQueries.GetMonitoringProcessLog, params={"hostname": hostname, "from_time": from_time, "to_time": to_time, "process": process}))
@@ -114,6 +121,13 @@ class Elasticsearch:
         if response == None:
             return None
         return response.get("categories_agg").get("buckets")
+
+    def getBreachedLog(self, hostname, from_time, to_time):
+        response = self.__get(query=QuerySerializer.getDesignatedQuery(
+            reqType=SupportedQueries.GetBreachedLog, params={"hostname": hostname, "from_time": from_time, "to_time": to_time}))
+        if response != None:
+            return response
+        return None
 
     def pushNetworkLog(self, hostname: str, data: structure_pb2.NetInformation):
         return self.__post(query=QuerySerializer.getDesignatedQuery(reqType=SupportedQueries.PostNetworkInfo, params={"data": data, "hostname": hostname}))
@@ -130,6 +144,10 @@ class Elasticsearch:
         for eachLog in data:
             self.__post(query=QuerySerializer.getDesignatedQuery(
                 reqType=SupportedQueries.PostMonitoringProcessDetail, params={"data": eachLog, "hostname": hostname}))
+
+    def pushBreachedLog(self, hostname: str, message: str):
+        self.__post(query=QuerySerializer.getDesignatedQuery(
+            reqType=SupportedQueries.PostBreachedLog, params={"data": {"message": message}, "hostname": hostname}))
 
 
 class QuerySerializer:
