@@ -77,7 +77,7 @@ async function plot_network_activity(from = Math.floor(Date.now() / 1000) - 6048
                 },
                 title: {
                     display: true,
-                    text: 'Chart.js Doughnut Chart'
+                    text: 'Network Activity Chart'
                 }
             }
         },

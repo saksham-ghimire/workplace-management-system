@@ -59,3 +59,75 @@ Netsh commands
 
 
 netsh advfirewall firewall add rule name="check001" direction="in" localport="8080" protocol="tcp" action="block"
+
+
+Indexes => 
+
+workstations
+{
+"hostname" : "saksham-PC",
+"assignedTo" : "saksham ghimire",
+"mail" : "gsakshyam3@gmail.com",
+"createdOn" : "2022-12-13",
+"ip" : "192.168.101.7",
+"monitoringprocesses" : [
+"Code.exe",
+"Brave.exe"
+],
+"restrictedProcesses" : [
+"brave.exe"
+]
+}
+
+networkinfo
+
+{
+"InputBytes" : -855856481,
+"OutputBytes" : 162526233,
+"InputPkt" : 2387980,
+"OutputPkt" : 1369588,
+"timestamp" : 1671461874,
+"hostname" : "saksham-PC"
+}
+
+pruntime
+
+{
+"processName" : "System Idle Process",
+"timestamp" : 1671187612,
+"hostname" : "saksham-PC"
+}
+
+systeminfo
+
+{
+"Temperature" : 48,
+"CpuPercent" : 3,
+"InUseRam" : "9.41 GB",
+"CpuOpSystem" : 20323,
+"CpuOpIdle" : 1220975,
+"CpuOpUser" : 19414,
+"timestamp" : 1671165076,
+"hostname" : "saksham-PC"
+}
+
+mprocesses
+
+{
+"Name" : "Code.exe",
+"IsRunning" : true,
+"MemoryPercent" : 8.658584,
+"CpuPercent" : 0.25185654,
+"ActiveThreads" : 245,
+"ProcessInstance" : 15,
+"timestamp" : 1671511869,
+"hostname" : "saksham-PC"
+}
+
+breachedlog
+
+{
+"message" : "restriced application brave.exe has been detected running",
+"timestamp" : 1671682083,
+"hostname" : "saksham-PC"
+}
