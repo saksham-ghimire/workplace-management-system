@@ -32,10 +32,27 @@ go run main.go #without escalated privilege many features including firewall rul
 uvicorn main:app --reload
 ``` 
 
+## Context Explanation
+
+Here are some helpful explanation and screenshot for people willing to contribute/participate. 
+
+* API Document [The project is built upon fastapi so openAPI documentation is pre-provided. Access it with /docs endpoint]
+* Dashboard [chartJS is used for visualization]
+* State Management [Fetches information over GRPC and visualizes it on dashboard]
+* Firewall rule management [Uses netsh under the hood to add remove and update firewall rule]
+* Elasticsearch [Stores every collected log on elasticsearch, later used for visusalization]
+
+
+
+
+
 ## TechStack
 
-* Python
+* Python [Fast API]
 * Go
+* GRPC
+* Elasticsearch
+* Docker
 * Chart.js
 
 

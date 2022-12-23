@@ -59,7 +59,7 @@ async function plot_system_health_chart(hostname, from = Math.floor(Date.now() /
                 },
                 title: {
                     display: true,
-                    text: 'Chart.js Line Chart'
+                    text: 'System Health Chart'
                 }
             }
         },
@@ -129,7 +129,7 @@ async function plot_monitoring_process_chart(hostname, from = Math.floor(Date.no
                 },
                 title: {
                     display: true,
-                    text: 'Chart.js Line Chart'
+                    text: 'Monitoring Process Chart'
                 }
             }
         },
